@@ -4,7 +4,7 @@ const errorCheck = {
       if (!user || user.password !== password) {
         const message = new Error('Invalid fields');
         message.name = 'UnauthorizedError';
-        message.status = 400;
+        message.statusCode = 400;
         throw message;
       }
     },
@@ -15,7 +15,7 @@ const errorCheck = {
       if (user) {
         const message = new Error('User already registered');
         message.name = 'ConflictError';
-        message.status = 409;
+        message.statusCode = 409;
         throw message;
       }
     },
