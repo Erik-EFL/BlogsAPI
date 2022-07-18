@@ -1,16 +1,14 @@
 const middlewareError = (err, _req, res, _next) => {
-  const { name, statusCode, message } = err;
+  const { name, message } = err;
   switch (name) {
     case 'UnauthorizedError':
-      res.status(statusCode).json({ message }); break;
+      res.status(401).json({ message }); break;
     case 'ConflictError':
-      res.status(statusCode).json({ message }); break;
-    case 'NotFoundError':
-      res.status(statusCode).json({ message }); break;
+      res.status(409).json({ message }); break;
     case 'ValidationError':
-      res.status(statusCode).json({ message }); break;
+      res.status(400).json({ message }); break;
     default:
-      console.warn(err); res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json({ message: 'Internal server error' });
   }
 };
 
