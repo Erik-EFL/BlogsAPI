@@ -1,4 +1,5 @@
 const { validade } = require('../../middleware/validations/validate');
+const check = require('../../middleware/validations/verification.error');
 const { authenticationService } = require('../services/login.services');
 
 const authenticationController = {
@@ -10,8 +11,9 @@ const authenticationController = {
 
   tokenValidation: (req, res, next) => {
     const { authorization } = req.headers;
-
-    authenticationService.tokenValidation(authorization);
+    
+    check.token.ifExist(authorization);
+    check.token.ifValid(authorization);
 
     next();
   },

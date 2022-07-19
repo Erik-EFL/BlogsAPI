@@ -17,11 +17,6 @@ const authenticationService = {
 
     return token;
   },
-
-  tokenValidation: (token) => {
-    const user = check.token.verify(token);
-    return user;
-  },
 };
 
 module.exports = { authenticationService };
