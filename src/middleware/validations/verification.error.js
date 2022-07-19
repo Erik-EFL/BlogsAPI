@@ -56,26 +56,10 @@ const check = {
       if (!token) {
         const err = new Error('Token not found');
         err.name = 'Unauthorized';
-        err.status = 401;
         throw err;
       }
     },
 
-  },
-
-  application: {
-    ifExist: async (email) => {
-      const user = await db.User.findOne({
-        where: { email },
-        raw: true,
-      });
-
-      if (user) {
-        const error = new Error('User does not exist');
-        error.name = 'NotFound';
-        throw error;
-      }
-    },
   },
 };
 

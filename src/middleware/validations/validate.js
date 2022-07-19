@@ -41,7 +41,20 @@ const validade = {
       return value;
     },
   },
+  params: (id) => {
+    const schema = Joi.object({
+      id: Joi.number().integer().required(),
+    });
 
+    const { error, value } = schema.validate(id);
+    if (error) {
+      error.message = 'Some required fields are missing';
+      error.name = 'Validation';
+      throw error;
+    }
+
+    return value;
+  },
 };
 
 module.exports = { validade };
