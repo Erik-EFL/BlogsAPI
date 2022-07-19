@@ -1,18 +1,18 @@
+const check = require('../../middleware/validations/verifications.error');
 const db = require('../models');
 const serviceToken = require('./token.services');
 
 const authenticationService = {
-  login: async (email, password) => {
-    const user = await db.User.findOne({ where: { email } });
+  login: async (email, pass) => {
+    const user = await db.User.findOne({
+      where: { email },
+      raw: true,
+    });
 
-    if (!user || user.passwordHash !== password) {
-      const error = new Error('Invalid fields');
-      error.name = 'UnauthorizedError';
-      error.status = 400;
-      throw error;
-    }
+    check.ifUserNotExist(email);
+    check.validateUser(user, pass);
 
-    const { passwordHash, ...userWithoutPassword } = user.dataValue;
+    const { password, ...userWithoutPassword } = user;
 
     const token = serviceToken.generate(userWithoutPassword);
 

@@ -1,15 +1,15 @@
+const erros = {
+  ConflictError: 409,
+  NotFoundError: 404,
+  UnauthorizedError: 400,
+  ValidationError: 400,
+  default: 500,
+};
+
 const middlewareError = (err, _req, res, _next) => {
   const { name, message } = err;
-  switch (name) {
-    case 'UnauthorizedError':
-      res.status(401).json({ message }); break;
-    case 'ConflictError':
-      res.status(409).json({ message }); break;
-    case 'ValidationError':
-      res.status(400).json({ message }); break;
-    default:
-      res.status(500).json({ message: 'Internal server error' });
-  }
+  const status = erros[name] || erros.default;
+  res.status(status).json({ message });
 };
 
 module.exports = middlewareError;

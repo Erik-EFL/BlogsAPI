@@ -1,7 +1,6 @@
 const express = require('express');
 require('express-async-errors');
 const { routes } = require('./database/routes/export.routes');
-const { authenticationService } = require('./database/services/login.services');
 const middlewareError = require('./middleware/error/middleware.error');
 
 // ...
@@ -10,10 +9,7 @@ const app = express();
 app.use(express.json());
 
 // ...
-
 app.use('/login', routes.login);
-
-app.use(authenticationService.tokenValidation);
 
 app.use('/user', routes.user);
 

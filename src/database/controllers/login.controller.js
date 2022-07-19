@@ -7,6 +7,14 @@ const authenticationController = {
     const token = await authenticationService.login(email, password);
     res.status(200).json({ token });
   },
+
+  tokenValidation: (req, res, next) => {
+    const { authorization } = req.headers;
+
+    authenticationService.tokenValidation(authorization);
+
+    next();
+  },
 };
 
 module.exports = { authenticationController };
