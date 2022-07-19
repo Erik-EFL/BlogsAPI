@@ -6,7 +6,6 @@ const authenticationService = {
   login: async (email, pass) => {
     const user = await db.User.findOne({
       where: { email },
-      raw: true,
     });
 
     check.user.validate(user, pass);

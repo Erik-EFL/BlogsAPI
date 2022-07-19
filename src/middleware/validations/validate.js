@@ -11,7 +11,7 @@ const validade = {
     const { error, value } = schema.validate(data);
     if (error) {
       error.message = 'Some required fields are missing';
-      error.name = 'ValidationError';
+      error.name = 'Validation';
       throw error;
     }
     return value;

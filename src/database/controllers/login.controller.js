@@ -9,9 +9,9 @@ const authenticationController = {
     res.status(200).json({ token });
   },
 
-  tokenValidation: (req, res, next) => {
+  tokenValidation: (req, _res, next) => {
     const { authorization } = req.headers;
-    
+
     check.token.ifExist(authorization);
     check.token.ifValid(authorization);
 
