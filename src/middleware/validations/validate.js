@@ -33,11 +33,15 @@ const validade = {
       });
 
       const { error, value } = schema.validate(data);
-      if (error) throw error;
+      if (error) {
+        error.name = 'Validation';
+        throw error;
+      }
 
       return value;
     },
   },
+
 };
 
 module.exports = { validade };

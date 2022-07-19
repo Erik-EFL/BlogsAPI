@@ -4,10 +4,10 @@ const db = require('../../database/models');
 
 const check = {
   user: {
+
     ifExist: async (email) => {
       const user = await db.User.findOne({
         where: { email },
-        raw: true,
       });
 
       if (user) {
@@ -20,7 +20,6 @@ const check = {
     ifNotExist: async (email) => {
       const user = await db.User.findOne({
         where: { email },
-        raw: true,
       });
 
       if (!user) {
@@ -29,6 +28,7 @@ const check = {
         throw error;
       }
     },
+
     validate: (user, pass) => {
       if (!user || user.password !== pass) {
         const error = new Error('Invalid fields');
@@ -36,9 +36,11 @@ const check = {
         throw error;
       }
     },
+
   },
 
   token: {
+
     ifValid: (token) => {
       try {
         const { data } = jwt.verify(token, process.env.JWT_SECRET);
@@ -56,6 +58,22 @@ const check = {
         err.name = 'Unauthorized';
         err.status = 401;
         throw err;
+      }
+    },
+
+  },
+
+  application: {
+    ifExist: async (email) => {
+      const user = await db.User.findOne({
+        where: { email },
+        raw: true,
+      });
+
+      if (user) {
+        const error = new Error('User does not exist');
+        error.name = 'NotFound';
+        throw error;
       }
     },
   },
