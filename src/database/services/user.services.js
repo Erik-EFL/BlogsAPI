@@ -1,12 +1,10 @@
-const { User } = require('../models/user');
+const { User } = require('../models');
 const serviceToken = require('./token.services');
 
 const userService = {
-
-  create: async ({ displayName, email, password, image }) => {
-    const newUser = await User.create({ displayName, email, password, image });
-    const { password: pass, ...userWithoutPassword } = newUser.dataValue;
-
+  create: async (data) => {
+    const newUser = await User.create(data);
+    const { password, image, ...userWithoutPassword } = newUser;
     const token = serviceToken.generate(userWithoutPassword);
 
     return token;
