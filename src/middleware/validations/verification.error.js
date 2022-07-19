@@ -11,7 +11,7 @@ const check = {
 
     if (user) {
       const error = new Error('User already registered');
-      error.name = 'ConflictError';
+      error.name = 'Conflict';
       throw error;
     }
   },
@@ -24,7 +24,7 @@ const check = {
 
     if (!user) {
       const error = new Error('User not registered');
-      error.name = 'NotFoundError';
+      error.name = 'NotFound';
       throw error;
     }
   },
@@ -32,18 +32,26 @@ const check = {
   validateUser: (user, pass) => {
     if (!user || user.password !== pass) {
       const error = new Error('Invalid fields');
-      error.name = 'ValidationError';
+      error.name = 'Validation';
       throw error;
     }
   },
   token: {
-    verify: (token) => {
+    ifValid: (token) => {
       try {
         const { data } = jwt.verify(token, process.env.JWT_SECRET);
         return data;
       } catch (error) {
         const err = new Error('Expired or invalid token');
-        err.name = 'UnauthorizedError';
+        err.name = 'Unauthorized';
+        throw err;
+      }
+    },
+
+    ifExist: (token) => {
+      if (!token) {
+        const err = new Error('Token not found');
+        err.name = 'Unauthorized';
         err.status = 401;
         throw err;
       }
