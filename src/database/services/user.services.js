@@ -1,11 +1,11 @@
+const generate = require('../../middleware/generator/generate.jwt');
 const { User } = require('../models');
-const serviceToken = require('./token.services');
 
 const userService = {
   create: async (data) => {
     const newUser = await User.create(data);
     const { password, image, ...userWithoutPassword } = newUser;
-    const token = serviceToken.generate(userWithoutPassword);
+    const token = generate(userWithoutPassword);
 
     return token;
   },

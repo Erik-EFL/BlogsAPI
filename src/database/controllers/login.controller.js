@@ -1,4 +1,4 @@
-const { validade } = require('../../middleware/validations/validations');
+const { validade } = require('../../middleware/validations/validate');
 const { authenticationService } = require('../services/login.services');
 
 const authenticationController = {

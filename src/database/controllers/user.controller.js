@@ -1,5 +1,5 @@
-const check = require('../../middleware/validations/verifications.error');
-const { validade } = require('../../middleware/validations/validations');
+const check = require('../../middleware/validations/verification.error');
+const { validade } = require('../../middleware/validations/validate');
 const { userService } = require('../services/user.services');
 
 const userController = {

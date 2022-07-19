@@ -1,7 +1,7 @@
 const erros = {
   ConflictError: 409,
   NotFoundError: 404,
-  UnauthorizedError: 400,
+  UnauthorizedError: 401,
   ValidationError: 400,
   default: 500,
 };

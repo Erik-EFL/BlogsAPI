@@ -1,6 +1,6 @@
-const check = require('../../middleware/validations/verifications.error');
+const generate = require('../../middleware/generator/generate.jwt');
+const check = require('../../middleware/validations/verification.error');
 const db = require('../models');
-const serviceToken = require('./token.services');
 
 const authenticationService = {
   login: async (email, pass) => {
@@ -13,13 +13,13 @@ const authenticationService = {
 
     const { password, ...userWithoutPassword } = user;
 
-    const token = serviceToken.generate(userWithoutPassword);
+    const token = generate(userWithoutPassword);
 
     return token;
   },
 
   tokenValidation: (token) => {
-    const user = serviceToken.verify(token);
+    const user = check.token.verify(token);
     return user;
   },
 };
