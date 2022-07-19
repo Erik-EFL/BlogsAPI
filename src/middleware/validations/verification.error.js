@@ -3,39 +3,41 @@ const jwt = require('jsonwebtoken');
 const db = require('../../database/models');
 
 const check = {
-  ifUserExist: async (email) => {
-    const user = await db.User.findOne({
-      where: { email },
-      raw: true,
-    });
+  user: {
+    ifExist: async (email) => {
+      const user = await db.User.findOne({
+        where: { email },
+        raw: true,
+      });
 
-    if (user) {
-      const error = new Error('User already registered');
-      error.name = 'Conflict';
-      throw error;
-    }
+      if (user) {
+        const error = new Error('User already registered');
+        error.name = 'Conflict';
+        throw error;
+      }
+    },
+
+    ifNotExist: async (email) => {
+      const user = await db.User.findOne({
+        where: { email },
+        raw: true,
+      });
+
+      if (!user) {
+        const error = new Error('User not registered');
+        error.name = 'NotFound';
+        throw error;
+      }
+    },
+    validate: (user, pass) => {
+      if (!user || user.password !== pass) {
+        const error = new Error('Invalid fields');
+        error.name = 'Validation';
+        throw error;
+      }
+    },
   },
 
-  ifUserNotExist: async (email) => {
-    const user = await db.User.findOne({
-      where: { email },
-      raw: true,
-    });
-
-    if (!user) {
-      const error = new Error('User not registered');
-      error.name = 'NotFound';
-      throw error;
-    }
-  },
-
-  validateUser: (user, pass) => {
-    if (!user || user.password !== pass) {
-      const error = new Error('Invalid fields');
-      error.name = 'Validation';
-      throw error;
-    }
-  },
   token: {
     ifValid: (token) => {
       try {

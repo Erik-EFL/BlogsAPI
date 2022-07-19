@@ -9,7 +9,7 @@ const authenticationService = {
       raw: true,
     });
 
-    check.validateUser(user, pass);
+    check.user.validate(user, pass);
 
     const { password, ...userWithoutPassword } = user;
 
