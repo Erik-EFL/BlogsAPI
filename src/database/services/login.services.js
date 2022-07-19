@@ -9,7 +9,6 @@ const authenticationService = {
       raw: true,
     });
 
-    check.ifUserNotExist(email);
     check.validateUser(user, pass);
 
     const { password, ...userWithoutPassword } = user;

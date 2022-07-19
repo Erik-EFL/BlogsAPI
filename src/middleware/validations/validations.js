@@ -29,10 +29,12 @@ const validade = {
         password: Joi.string().min(6).required().messages({
           'any.empty': '"password" length must be at least 6 characters long',
         }),
+        image: Joi.string().empty(''),
       });
 
       const { error, value } = schema.validate(data);
       if (error) throw error;
+
       return value;
     },
   },

@@ -26,7 +26,7 @@ const check = {
       throw error;
     }
   },
-  
+
   validateUser: (user, pass) => {
     if (!user || user.password !== pass) {
       const error = new Error('Invalid fields');
