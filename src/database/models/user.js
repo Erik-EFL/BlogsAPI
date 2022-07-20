@@ -1,5 +1,6 @@
 'use strict';
 const User = (sequelize, DataTypes) => {
+  /** @type  */
   const User = sequelize.define('User',
   {
     id: {
@@ -18,9 +19,9 @@ const User = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
-/*   User.associate = (models) => {
+  User.associate = (models) => {
     User.hasMany(models.BlogPost, { key: 'userId', as: 'BlogPosts' });
-  }; */
+  };
 
   return User;
 };
