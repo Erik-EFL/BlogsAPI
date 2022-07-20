@@ -24,7 +24,12 @@ const BlogPost = (sequelize, DataTypes) => {
     createdAt: 'published',
     updatedAt: 'updated',
   });
-return BlogPost;
+
+  BlogPost.associate = (models) => {
+    BlogPost.belongsTo(models.User, { key: 'userId', as: 'User' });
+  }
+
+  return BlogPost;
 };
 
 module.exports = BlogPost;
