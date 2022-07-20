@@ -5,7 +5,7 @@ const {
 
 const category = Router();
 
-// category.get('/', categoryController.);
+category.get('/', tokenValidation, categoryController.get.all);
 category.post('/', tokenValidation, categoryController.post.create);
 
 module.exports = category;
