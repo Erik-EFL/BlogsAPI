@@ -55,6 +55,23 @@ const validade = {
 
     return value;
   },
+  category: {
+    body: {
+      name: (name) => {
+        const schema = Joi.object({
+          name: Joi.string().required(),
+        });
+
+        const { error, value } = schema.validate(name);
+        if (error) {
+          error.message = '"name" is required';
+          error.name = 'Validation';
+          throw error;
+        }
+        return value;
+      },
+    },
+  },
 };
 
 module.exports = { validade };
