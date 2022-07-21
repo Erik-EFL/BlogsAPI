@@ -1,10 +1,10 @@
 const check = require('../../middleware/validations/verification.error');
-const { validade } = require('../../middleware/validations/validate');
+const { validate } = require('../../middleware/validations/validate');
 const { userService } = require('../services/user.services');
 
 const userController = {
   create: async (req, res) => {
-    const { displayName, email, password, image } = validade.register.body(req.body);
+    const { displayName, email, password, image } = validate.register.body(req.body);
 
     await check.user.ifExist(email);
 
@@ -19,7 +19,7 @@ const userController = {
   },
 
   getOne: async (req, res) => {
-    const { id } = validade.params(req.params);
+    const { id } = req.params;
     const user = await userService.getOne(id);
 
     if (!user) {
