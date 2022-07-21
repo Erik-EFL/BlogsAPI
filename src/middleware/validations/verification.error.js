@@ -1,10 +1,9 @@
-require('dotenv/config');
 const jwt = require('jsonwebtoken');
 const db = require('../../database/models');
+require('dotenv/config');
 
 const check = {
   user: {
-
     ifExist: async (email) => {
       const user = await db.User.findOne({
         where: { email },
@@ -16,7 +15,6 @@ const check = {
         throw error;
       }
     },
-
     ifNotExist: async (email) => {
       const user = await db.User.findOne({
         where: { email },
@@ -28,7 +26,6 @@ const check = {
         throw error;
       }
     },
-
     validate: (user, pass) => {
       if (!user || user.password !== pass) {
         const error = new Error('Invalid fields');
@@ -36,11 +33,8 @@ const check = {
         throw error;
       }
     },
-
   },
-
   token: {
-
     ifValid: (token) => {
       try {
         const { data } = jwt.verify(token, process.env.JWT_SECRET);
@@ -51,7 +45,6 @@ const check = {
         throw err;
       }
     },
-
     ifExist: (token) => {
       if (!token) {
         const err = new Error('Token not found');
@@ -59,7 +52,23 @@ const check = {
         throw err;
       }
     },
-
+    get: {
+      id: (token) => {
+        const { user: { id } } = jwt.verify(token, process.env.JWT_SECRET);
+        return id;
+      },
+    },
+  },
+  posts: {
+      category: {
+        ifExist: (categoryId) => {
+          if (!categoryId) {
+            const error = new Error('"categoryIds" not found');
+            error.name = 'Validation';
+            throw error;
+          }
+        },
+      },
   },
 };
 

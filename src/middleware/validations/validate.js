@@ -1,6 +1,7 @@
 const Joi = require('joi');
+const categoryService = require('../../database/services/category.services');
 
-const validade = {
+const validate = {
   login: {
     body: (data) => {
       const schema = Joi.object({
@@ -41,20 +42,6 @@ const validade = {
       return value;
     },
   },
-  params: (id) => {
-    const schema = Joi.object({
-      id: Joi.number().integer().required(),
-    });
-
-    const { error, value } = schema.validate(id);
-    if (error) {
-      error.message = 'Some required fields are missing';
-      error.name = 'Validation';
-      throw error;
-    }
-
-    return value;
-  },
   category: {
     body: {
       name: (name) => {
@@ -72,6 +59,33 @@ const validade = {
       },
     },
   },
+  posts: {
+    body: {
+      object: (object) => {
+        const schema = Joi.object({
+          title: Joi.string().required(),
+          content: Joi.string().required(),
+          categoryIds: Joi.array().min(1).messages({
+            'array.includes': '"categoryIds" not found',
+          }),
+        });
+
+        const { error, value } = schema.validate(object);
+        if (error) {
+          error.message = 'Some required fields are missing';
+          error.name = 'Validation';
+          throw error;
+        }
+        return value;
+      },
+      category: async ({ categoryIds }) => {
+        console.log('EU TO LOOOOKO', categoryIds);
+        await Promise.all(categoryIds.map(
+          (categoryId) => categoryService.get.one(categoryId),
+          ));
+      },
+    },
+  },
 };
 
-module.exports = { validade };
+module.exports = { validate };

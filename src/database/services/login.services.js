@@ -10,8 +10,7 @@ const authenticationService = {
 
     check.user.validate(user, pass);
 
-    const { password, ...userWithoutPassword } = user;
-
+    const { password, ...userWithoutPassword } = user.dataValues;
     const token = generate(userWithoutPassword);
 
     return token;
