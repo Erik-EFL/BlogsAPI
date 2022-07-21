@@ -1,4 +1,3 @@
-'use strict';
 const Category = (sequelize, DataTypes) => {
   const Category = sequelize.define('Category',
   {
@@ -11,11 +10,18 @@ const Category = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
   },
   {
     tableName: 'Categories',
-    timestamps: false,
   });
 return Category;
 };
