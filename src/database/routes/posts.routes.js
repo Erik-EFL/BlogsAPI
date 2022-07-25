@@ -5,7 +5,10 @@ const {
 
 const posts = Router();
 
-//  posts.get('/', tokenValidation, blogPosts.post.);
+posts.get('/:id', tokenValidation, blogPosts.get.one);
+posts.get('/', tokenValidation, blogPosts.get.all);
 posts.post('/', tokenValidation, blogPosts.post.create);
+posts.put('/:id', tokenValidation, blogPosts.put.edit);
+posts.delete('/:id', tokenValidation, blogPosts.delete.one);
 
 module.exports = posts;
