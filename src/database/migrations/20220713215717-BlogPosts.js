@@ -10,24 +10,28 @@ module.exports = {
         autoIncrement: true,
       },
       title: {
-        allowNull: false,
         type: Sequelize.STRING,
+        allowNull: false,
       },
       content: {
-        allowNull: false,
         type: Sequelize.STRING,
+        allowNull: false,
       },
       userId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Users',
           key: 'id',
         },
+        onDelete: 'cascade'
       },
       published: {
+        allowNull: false,
         type: Sequelize.DATE,
       },
       updated: {
+        allowNull: false,
         type: Sequelize.DATE,
       }
     });
