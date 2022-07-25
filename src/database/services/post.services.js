@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../models');
 const { PostCategory } = require('../models');
 const config = require('../config/config');
-const check = require('../../middleware/validations/verification.error');
+// const check = require('../../middleware/validations/verification.error');
 
 const sequelize = new Sequelize(config.development);
 
