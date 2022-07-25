@@ -79,7 +79,6 @@ const validate = {
         return value;
       },
       category: async ({ categoryIds }) => {
-        console.log('EU TO LOOOOKO', categoryIds);
         await Promise.all(categoryIds.map(
           (categoryId) => categoryService.get.one(categoryId),
           ));

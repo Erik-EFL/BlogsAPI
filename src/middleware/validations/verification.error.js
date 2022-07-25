@@ -37,8 +37,8 @@ const check = {
   token: {
     ifValid: (token) => {
       try {
-        const { data } = jwt.verify(token, process.env.JWT_SECRET);
-        return data;
+        const { user: { id } } = jwt.verify(token, process.env.JWT_SECRET);
+        return id;
       } catch (error) {
         const err = new Error('Expired or invalid token');
         err.name = 'Unauthorized';
@@ -60,15 +60,45 @@ const check = {
     },
   },
   posts: {
-      category: {
-        ifExist: (categoryId) => {
-          if (!categoryId) {
-            const error = new Error('"categoryIds" not found');
-            error.name = 'Validation';
-            throw error;
-          }
-        },
+    category: {
+      ifExist: (categoryId) => {
+        if (!categoryId) {
+          const error = new Error('"categoryIds" not found');
+          error.name = 'Validation';
+          throw error;
+        }
       },
+    },
+    blogPost: {
+      ifExistPost: (blogPostId) => {
+        if (!blogPostId) {
+          const error = new Error('Post does not exist');
+          error.name = 'NotFound';
+          throw error;
+        }
+      },
+
+      ifUserOwnerPost: (blogPostUserId, userId) => {
+        if (blogPostUserId !== userId) {
+          const error = new Error('Unauthorized user');
+          error.name = 'Unauthorized';
+          throw error;
+        }
+      },
+
+      ifUserExist: async (userId) => {
+        const user = await db.User.findByPk(userId, {
+          where: { id: userId },
+        });
+
+        if (!user) {
+          const error = new Error('User does not exist');
+          error.name = 'NotFound';
+          throw error;
+        }
+        return user;
+      },
+    },
   },
 };
 
