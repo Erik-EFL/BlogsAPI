@@ -21,9 +21,11 @@ const Category = (sequelize, DataTypes) => {
     },
   },
   {
+    timestamps: false,
     tableName: 'Categories',
   });
-return Category;
+  
+  return Category;
 };
 
 module.exports = Category;
