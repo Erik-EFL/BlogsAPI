@@ -1,6 +1,6 @@
 const { validate } = require('../../middleware/validations/validate');
 const check = require('../../middleware/validations/verification.error');
-const db = require('../models');
+// const db = require('../models');
 const postService = require('../services/post.services');
 // const { userService } = require('../services/user.services');
 
