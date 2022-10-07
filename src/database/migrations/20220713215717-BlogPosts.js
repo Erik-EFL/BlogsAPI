@@ -9,14 +9,8 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
       },
-      title: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      content: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
+      title: Sequelize.STRING,
+      content: Sequelize.STRING,
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
