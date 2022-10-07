@@ -5,6 +5,7 @@ const {
 
 const posts = Router();
 
+posts.get('/search', tokenValidation, blogPosts.get.search);
 posts.get('/:id', tokenValidation, blogPosts.get.one);
 posts.get('/', tokenValidation, blogPosts.get.all);
 posts.post('/', tokenValidation, blogPosts.post.create);
