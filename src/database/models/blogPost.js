@@ -20,10 +20,8 @@ const BlogPost = (sequelize, DataTypes) => {
     },
     published: DataTypes.DATE,
     updated: DataTypes.DATE,
-
   },
   {
-    timestamps: true,
     createdAt: 'published',
     updatedAt: 'updated',
   });

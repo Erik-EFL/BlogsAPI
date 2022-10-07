@@ -11,20 +11,12 @@ const Category = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-    },
   },
   {
     timestamps: false,
     tableName: 'Categories',
   });
-  
+
   return Category;
 };
 
