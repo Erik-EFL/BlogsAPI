@@ -15,12 +15,9 @@ const categoryService = {
     },
 
     one: async (id) => {
-      console.log(id);
-      const category = await db.Category.findOne({
-        where: { id },
-      });
-
+      const category = await db.Category.findByPk(id);
       check.posts.category.ifExist(category);
+      return category;
     },
   },
 };

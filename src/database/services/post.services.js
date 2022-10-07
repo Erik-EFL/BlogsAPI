@@ -28,8 +28,26 @@ const postService = {
             attributes: { exclude: ['createdAt', 'updatedAt'] },
           }],
       });
-      console.log('SOU UM MERDA 30', post);
       return post;
+    },
+    /* Sua aplicação deve ter o endpoint GET /post/search?q=:searchTerm */
+    search: async (searchTerm) => {
+      const posts = await db.BlogPost.findAll({
+        where: {
+          [Sequelize.Op.or]: [
+            { title: { [Sequelize.Op.like]: `%${searchTerm}%` } },
+            { content: { [Sequelize.Op.like]: `%${searchTerm}%` } },
+          ],
+        },
+        include: [{ model: db.User, as: 'user', attributes: { exclude: ['password'] } },
+          { model: db.Category,
+            through: { attributes: [] },
+            as: 'Category',
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+          }],
+      });
+      console.log(posts);
+      return posts;
     },
   },
   post: {
