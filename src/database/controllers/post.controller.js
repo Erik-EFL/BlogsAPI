@@ -1,8 +1,6 @@
 const { validate } = require('../../middleware/validations/validate');
 const check = require('../../middleware/validations/verification.error');
-// const db = require('../models');
 const postService = require('../services/post.services');
-// const { userService } = require('../services/user.services');
 
 const postController = {
   get: {
@@ -17,6 +15,11 @@ const postController = {
       check.posts.blogPost.ifExistPost(post);
 
       return res.status(200).json(post);
+    },
+    search: async (req, res) => {
+      const { q: searchTerm } = req.query;
+      const posts = await postService.get.search(searchTerm);
+      return res.status(200).json(posts);
     },
   },
   post: {
