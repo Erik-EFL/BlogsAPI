@@ -5,7 +5,6 @@ module.exports = {
     await queryInterface.createTable('BlogPosts', {
       id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         primaryKey: true,
         autoIncrement: true,
       },
@@ -13,21 +12,14 @@ module.exports = {
       content: Sequelize.STRING,
       userId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: 'Users',
           key: 'id',
         },
         onDelete: 'cascade'
       },
-      published: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
-      updated: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      }
+      published: Sequelize.DATE,
+      updated:  Sequelize.DATE,
     });
   },
 

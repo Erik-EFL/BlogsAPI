@@ -3,14 +3,10 @@ const Category = (sequelize, DataTypes) => {
   {
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+    name: DataTypes.STRING,
   },
   {
     timestamps: false,

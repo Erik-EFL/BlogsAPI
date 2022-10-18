@@ -65,7 +65,7 @@ const validate = {
         const schema = Joi.object({
           title: Joi.string().required(),
           content: Joi.string().required(),
-          categoryIds: Joi.array().min(1).messages({
+          categoryId: Joi.array().min(1).messages({
             'array.includes': '"categoryIds" not found',
           }),
         });

@@ -11,14 +11,12 @@ const postController = {
     one: async (req, res) => {
       const { id } = req.params;
       const post = await postService.get.one(id);
-
-      check.posts.blogPost.ifExistPost(post);
-
       return res.status(200).json(post);
     },
     search: async (req, res) => {
-      const { q: searchTerm } = req.query;
-      const posts = await postService.get.search(searchTerm);
+      const { q: searchedTerm } = req.query;
+      const posts = await postService.get.search(searchedTerm);
+
       return res.status(200).json(posts);
     },
   },
@@ -28,6 +26,7 @@ const postController = {
       const userId = check.token.get.id(token);
 
       const data = validate.posts.body.object(req.body);
+
       await validate.posts.body.category(data);
 
       const newPost = await postService.post.create({ data, userId });
@@ -36,19 +35,23 @@ const postController = {
   },
   put: {
     edit: async (req, res) => {
+      const { title, content } = await validate.posts.body.object(req.body);
+      const { id } = req.params;
       const token = req.headers.authorization;
       const userId = check.token.get.id(token);
 
       const post = await postService.get.one(req.params.id);
-      const blogPost = post.dataValues;
 
-      check.posts.blogPost.ifUserOwnerPost(blogPost.userId, userId);
+      if (!post) {
+        return res.status(404).json({ message: 'Post does not exist' });
+      }
 
-      const data = await validate.posts.body.object(req.body);
+      const postUserId = post.dataValues.userId;
 
-      await postService.put.edit({ data, userId });
+      check.posts.blogPost.ifUserOwnerPost(postUserId, userId);
 
-      const editedPost = await postService.get.one(req.params.id);
+      await postService.put.edit({ title, content, id });
+      const editedPost = await postService.get.one(id);
 
       return res.status(200).json(editedPost);
     },
@@ -59,9 +62,13 @@ const postController = {
       const userId = check.token.get.id(token);
 
       const post = await postService.get.one(req.params.id);
-      const blogPost = post.dataValues;
+      console.log('65, postController', post);
+      if (!post) {
+        return res.status(404).json({ message: 'Post does not exist' });
+      }
 
-      check.posts.blogPost.ifUserOwnerPost(blogPost.userId, userId);
+      check.posts.blogPost.ifExistPost(post);
+      check.posts.blogPost.ifUserOwnerPost(post.userId, userId);
 
       await postService.delete.one(req.params.id);
 

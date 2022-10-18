@@ -23,6 +23,15 @@ const userService = {
     return user;
   },
 
+  getByEmail: async (email) => {
+    const user = await User.findOne({
+      where: { email },
+      attributes: { exclude: ['password'] },
+    });
+    if (!user) return null;
+    return user;
+  },
+
   delete: async (id) => {
     const user = await User.destroy({
       where: { id },
